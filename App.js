@@ -1,41 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
- // ListView,
   FlatList,
   Image,
   Text,
-} from 'react-native';
-//import ListView from 'deprecated-react-native-listview';
-import data from './attractions.json';
+} from "react-native";
+import data from "./attractions.json";
+import * as SplashScreen from 'expo-splash-screen';
 
+SplashScreen.preventAutoHideAsync();
+setTimeout(SplashScreen.hideAsync, 2000);
+
+const icon = require('./images/chicago.png');
 
 export default class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   const dataSource = new ListView.DataSource({
-  //     rowHasChanged: (r1, r2) => r1 !== r2
-  //   });
-
-  //   this.state = {
-  //     dataSource: dataSource.cloneWithRows(data),
-  //   };
-  // }
-
-  renderRow({item}) {
+  renderRow({ item }) {
     return (
       <View style={styles.row}>
         <View style={styles.iconContainer}>
-          <Image source={basketIcon} style={styles.icon} />
+          <Image source={icon} style={styles.icon} />
         </View>
         <View style={styles.info}>
-          <Text style={styles.items}>{item.items} Items</Text>
+          <Text style={styles.items}>{item.name}</Text>
           <Text style={styles.address}>{item.address}</Text>
-        </View>
-        <View style={styles.total}>
-          <Text style={styles.date}>{item.date}</Text>
-          <Text style={styles.price}>${item.total}</Text>
+          <Text style={styles.url}>{item.modurl}</Text>
         </View>
       </View>
     );
@@ -44,12 +33,8 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        <Text style={styles.title}>Sales</Text>
-        {/* <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-        /> */}
-        <FlatList  data={data} renderItem={this.renderRow}></FlatList>
+        <Text style={styles.title}>City Guide</Text>
+        <FlatList data={data} renderItem={this.renderRow}></FlatList>
       </View>
     );
   }
@@ -58,40 +43,41 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#ede2e0",
   },
   title: {
-    backgroundColor: '#0f1b29',
-    color: '#fff',
+    backgroundColor: "#1c7da5",
+    color: "#ede2e0",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     padding: 10,
     paddingTop: 40,
-    textAlign: 'center',
+    textAlign: "center",
   },
   row: {
-    borderColor: '#f1f1f1',
+    borderColor: "#7b7983",
     borderBottomWidth: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginLeft: 10,
     marginRight: 10,
     paddingTop: 20,
     paddingBottom: 20,
   },
   iconContainer: {
-    alignItems: 'center',
-    backgroundColor: '#feb401',
-    borderColor: '#feaf12',
-    borderRadius: 25,
+    alignItems: "center",
+    backgroundColor: "#1f3243",
+    borderColor: "#1f3243",
+    borderRadius: 50,
     borderWidth: 1,
-    justifyContent: 'center',
-    height: 50,
-    width: 50,
+    justifyContent: "center",
+    height: 70,
+    width: 70,
   },
   icon: {
-    tintColor: '#fff',
-    height: 22,
-    width: 22,
+    height: 45,
+    width: 45,
+    borderRadius: 50,
+    borderWidth: 1,
   },
   info: {
     flex: 1,
@@ -99,24 +85,18 @@ const styles = StyleSheet.create({
     paddingRight: 25,
   },
   items: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: "bold",
+    fontSize: 18,
     marginBottom: 5,
+    color: "#122737"
   },
   address: {
-    color: '#ccc',
-    fontSize: 14,
+    color: "#3c4f62",
+    fontSize: 16,
   },
-  total: {
-    width: 80,
-  },
-  date: {
-    fontSize: 12,
-    marginBottom: 5,
-  },
-  price: {
-    color: '#1cad61',
-    fontSize: 25,
-    fontWeight: 'bold',
+  url: {
+    color: "#3c4f62",
+    fontSize: 16,
+    fontStyle: "italic"
   }
 });
